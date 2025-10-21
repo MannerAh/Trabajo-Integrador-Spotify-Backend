@@ -1,7 +1,14 @@
-/**
- * Rutas para artistas
- * Los estudiantes deben implementar todas las rutas relacionadas con artistas
- */
+// routes/artistRoutes.js
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { getAllArtists,
+    getArtistById,
+    createArtist
+} = require('../controllers/artistController');
+
+router.get('/', getAllArtists);
+router.get('/:id', getArtistById);
+router.post('/', createArtist)
+
+module.exports = router;
