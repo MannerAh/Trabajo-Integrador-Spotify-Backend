@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // ----------------------------------------------------
 
 // Conecto todas mis rutas API a través del router principal.
-app.use('/api/v1', mainRouter);
+app.use('/api/v2', mainRouter);
 
 
 // ----------------------------------------------------

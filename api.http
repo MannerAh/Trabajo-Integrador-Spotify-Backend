@@ -1,11 +1,12 @@
 
 ### VARIABLES GLOBALES
-@baseUrl = http://localhost:3000/api/v1
+@baseUrl = http://localhost:3000/api/v2
 @json = application/json
 
 ### SEEDER
 POST {{baseUrl}}/seed
 Content-Type: {{json}}
+### =========================
 
 ### ==========================
 ### USUARIOS
@@ -59,8 +60,8 @@ POST {{baseUrl}}/artistas
 Content-Type: {{json}}
 
 {
-  "nombre": "Fito Paez",
-  "imagen_url": "https://cdn.example.com/fito.jpg"
+  "nombre": "Masayoshi Takanaka",
+  "imagen_url": "https://cdn.example.com/breezin.jpg"
 }
 
 ### Listar artistas
