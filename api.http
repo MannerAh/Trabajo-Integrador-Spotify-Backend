@@ -3,6 +3,10 @@
 @baseUrl = http://localhost:3000/api/v1
 @json = application/json
 
+### SEEDER
+POST {{baseUrl}}/seed
+Content-Type: {{json}}
+
 ### ==========================
 ### USUARIOS
 ### ==========================
