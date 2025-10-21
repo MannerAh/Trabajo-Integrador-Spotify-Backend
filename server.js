@@ -28,7 +28,7 @@ const startServer = async () => {
         // --- 2. SINCRONIZACIÓN DE MODELOS ---
         // El comando 'sync' verifica si la tabla existe en la base de datos.
         // Si usara { force: true } Borraría y recrearía todas las tablas Uso sync() simple.
-        await sequelize.sync({ force: false }); 
+        await sequelize.sync({ alter: true }); 
         console.log('✅ Modelos de Sequelize sincronizados correctamente.');
 
         // --- 3. INICIO DEL SERVIDOR WEB ---
