@@ -46,12 +46,12 @@ Song.belongsTo(Album, { foreignKey: 'id_album', as: 'Album' });
 // ------------------------------------------------------------------
 
 // 6. User <-> PaymentMethod (Un usuario tiene muchos métodos de pago)
-User.hasMany(PaymentMethod, { foreignKey: 'user_id', as: 'PaymentMethods' });
-PaymentMethod.belongsTo(User, { foreignKey: 'user_id', as: 'Owner' });
+User.hasMany(PaymentMethod, { foreignKey: 'user_id', as: 'PaymentMethods', onDelete: 'CASCADE'  });
+PaymentMethod.belongsTo(User, { foreignKey: 'user_id', as: 'Owner', onDelete: 'CASCADE'  });
 
 // 7. User <-> Subscription (Un usuario tiene una suscripción)
-User.hasOne(Subscription, { foreignKey: 'user_id', as: 'Subscription' });
-Subscription.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+User.hasOne(Subscription, { foreignKey: 'user_id', as: 'Subscription', onDelete: 'CASCADE' });
+Subscription.belongsTo(User, { foreignKey: 'user_id', as: 'User', onDelete: 'CASCADE' });
 
 // 8. User <-> Billing (Un usuario tiene muchas facturas)
 User.hasMany(Billing, { foreignKey: 'user_id', as: 'Invoices' });
@@ -71,12 +71,12 @@ Billing.belongsTo(Subscription, { foreignKey: 'subscription_id', as: 'Subscripti
 // ------------------------------------------------------------------
 
 // 11. User <-> Playlist (Un usuario tiene muchas playlists)
-User.hasMany(Playlist, { foreignKey: 'user_id', as: 'Playlists' });
-Playlist.belongsTo(User, { foreignKey: 'user_id', as: 'Creator' });
+User.hasMany(Playlist, { foreignKey: 'user_id', as: 'Playlists', onDelete: 'CASCADE' });
+Playlist.belongsTo(User, { foreignKey: 'user_id', as: 'Creator', onDelete: 'CASCADE' });
 
 // 12. User <-> ListeningHistory (Un usuario tiene un historial de escucha)
-User.hasMany(ListeningHistory, { foreignKey: 'user_id', as: 'History' });
-ListeningHistory.belongsTo(User, { foreignKey: 'user_id', as: 'User' });
+User.hasMany(ListeningHistory, { foreignKey: 'user_id', as: 'History', onDelete: 'CASCADE'  });
+ListeningHistory.belongsTo(User, { foreignKey: 'user_id', as: 'User', onDelete: 'CASCADE'  });
 
 // 13. Song <-> ListeningHistory (Una canción está en muchas entradas del historial)
 Song.hasMany(ListeningHistory, { foreignKey: 'song_id', as: 'ListenEntries' });
