@@ -9,6 +9,9 @@ const { sequelize, connectDB } = require('./src/config/database');
 
 // Importo el archivo de asociaciones
 // Al importarlo, se ejecutan las llamadas a hasMany/belongsTo definidas en index.js.
+// server.js (en la sección de importaciones)
+
+// Desestructurar todos los modelos que dependen de User
 const models = require('./src/models'); 
 
 const PORT = process.env.PORT || 3000; 
@@ -19,27 +22,26 @@ const PORT = process.env.PORT || 3000;
   2. Sincroniza los modelos con la base de datos.
   3. Inicia la escucha de Express en el puerto definido.
  */
+
+
 const startServer = async () => {
     try {
-        // --- 1. CONEXIÓN A LA BASE DE DATOS ---
-        // Llamo a la función que autentica la conexión a MySQL
+        // 1. Conexión a la DB
         await connectDB(); 
 
-        // --- 2. SINCRONIZACIÓN DE MODELOS ---
-        // El comando 'sync' verifica si la tabla existe en la base de datos.
-        // Si usara { force: true } Borraría y recrearía todas las tablas Uso sync() simple.
-        await sequelize.sync({ alter: true }); 
+        // 2. Sincronización de Modelos al fin sin el true lpm
+        // Crea las tablas que falten o ajusta las existentes.
+        await sequelize.sync(); 
+        
         console.log('✅ Modelos de Sequelize sincronizados correctamente.');
 
-        // --- 3. INICIO DEL SERVIDOR WEB ---
-        // Inicio la aplicación Express para que escuche peticiones en el puerto
+        // --- 3. INICIO DEL SERVIDOR WEB (app.listen) ---
         app.listen(PORT, () => {
             console.log(`🚀 Servidor Express iniciado y escuchando en el puerto ${PORT}`);
         });
 
     } catch (error) {
         console.error('❌ Error fatal al iniciar la aplicación:', error);
-        // Termino el proceso si ocurre un error grave (ej. no hay conexión a DB)
         process.exit(1); 
     }
 };
