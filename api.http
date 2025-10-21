@@ -3,7 +3,7 @@
 @baseUrl = http://localhost:3000/api/v2
 @json = application/json
 
-### SEEDER
+### SEEDER (IA made)
 POST {{baseUrl}}/seed
 Content-Type: {{json}}
 ### =========================
@@ -12,7 +12,7 @@ Content-Type: {{json}}
 ### USUARIOS
 ### ==========================
 # Crear usuario (OK)
-POST {{baseUrl}}/usuarios
+POST {{baseUrl}}/users
 Content-Type: {{json}}
 
 {
@@ -26,7 +26,7 @@ Content-Type: {{json}}
 }
 
 ### Crear usuario (ERROR: falta email)
-POST {{baseUrl}}/usuarios
+POST {{baseUrl}}/users
 Content-Type: {{json}}
 
 {
@@ -34,97 +34,97 @@ Content-Type: {{json}}
   "fecha_nac": "1995-05-20"
 }
 
-### Listar usuarios
-GET {{baseUrl}}/usuarios?page=1&limit=20
+### Listar users
+GET {{baseUrl}}/users?page=1&limit=20
 
 ### Obtener usuario por ID
-GET {{baseUrl}}/usuarios/1
+GET {{baseUrl}}/users/1
 
 ### Actualizar usuario (cambio de password → actualiza fecha_ult_mod_password)
-PUT {{baseUrl}}/usuarios/1
+PUT {{baseUrl}}/users/1
 Content-Type: {{json}}
 
 {
   "password": "Nuev4Clave!"
 }
 
-### Listar usuarios con password vencida (>90 días)
-GET {{baseUrl}}/usuarios/password-vencidas
+### Listar users con password vencida (>90 días)
+GET {{baseUrl}}/users/password-vencidas
 
 
 ### ==========================
 ### ARTISTAS
 ### ==========================
 # Crear artista
-POST {{baseUrl}}/artistas
+POST {{baseUrl}}/artists
 Content-Type: {{json}}
 
 {
-  "nombre": "Masayoshi Takanaka",
-  "imagen_url": "https://cdn.example.com/breezin.jpg"
+  "name": "Masayoshi Takanaka",
+  "image": "https://cdn.example.com/breezin.jpg"
 }
 
 ### Listar artistas
-GET {{baseUrl}}/artistas
+GET {{baseUrl}}/artists
 
 
 ### ==========================
 ### ÁLBUMES
 ### ==========================
-# Crear álbum (UNIQUE por artista+titulo)
-POST {{baseUrl}}/albumes
+# Crear álbum (UNIQUE por artists+title)
+POST {{baseUrl}}/albums
 Content-Type: {{json}}
 
 {
-  "titulo": "El Amor Después Del Amor",
+  "title": "El Amor Después Del Amor",
   "id_artista": 1,
   "id_discografica": 4,
   "anio_publicacion": 1992
 }
 
-### Listar álbumes por artista
-GET {{baseUrl}}/albumes?artistaId=1
+### Listar álbumes por artists
+GET {{baseUrl}}/albums?artistaId=1
 
-### Canciones de un álbum
-GET {{baseUrl}}/albumes/1/canciones
+### songs de un álbum
+GET {{baseUrl}}/albums/1/songs
 
 
 ### ==========================
-### CANCIONES
+### songs
 ### ==========================
 # Crear canción (OK: duracion en segundos)
-POST {{baseUrl}}/canciones
+POST {{baseUrl}}/songs
 Content-Type: {{json}}
 
 {
-  "titulo": "Mariposa Tecknicolor",
-  "duracion_seg": 255,
+  "title": "Mariposa Tecknicolor",
+  "duration": 255,
   "id_album": 1
 }
 
 ### Crear canción (ERROR: duracion en mm.ss)
-POST {{baseUrl}}/canciones
+POST {{baseUrl}}/songs
 Content-Type: {{json}}
 
 {
-  "titulo": "DuracionMala",
-  "duracion_seg": 3.25,
+  "title": "DuracionMala",
+  "duration": 3.25,
   "id_album": 1
 }
 
-### Listar canciones (filtros)
-GET {{baseUrl}}/canciones?genero=Pop&albumId=1
+### Listar songs (filtros)
+GET {{baseUrl}}/songs?genres=Jazz&albumId=24
 
 ### Asociar género a canción
-POST {{baseUrl}}/canciones/1/generos
+POST {{baseUrl}}/songs/21/genres
 Content-Type: {{json}}
 
 {
-  "id_genero": 3
+  "genreId": 3
 }
 
 ### Quitar género de canción
-DELETE {{baseUrl}}/canciones/1/generos/3
+DELETE {{baseUrl}}/songs/21/genres/3
 
 
 ### ==========================
@@ -150,12 +150,12 @@ POST {{baseUrl}}/playlists
 Content-Type: {{json}}
 
 {
-  "titulo": "Para correr",
+  "title": "Para correr",
   "id_usuario": 1
 }
 
 ### Agregar canción a playlist
-POST {{baseUrl}}/playlists/1/canciones
+POST {{baseUrl}}/playlists/1/songs
 Content-Type: {{json}}
 
 {
@@ -164,7 +164,7 @@ Content-Type: {{json}}
 }
 
 ### Quitar canción de playlist
-DELETE {{baseUrl}}/playlists/1/canciones/1
+DELETE {{baseUrl}}/playlists/1/songs/1
 
 ### Eliminar (soft-delete) playlist → debe enviar fecha_eliminada
 PUT {{baseUrl}}/playlists/1
@@ -253,40 +253,40 @@ GET {{baseUrl}}/pagos?usuarioId=1&desde=2025-09-01&hasta=2025-12-31
 ### VISTAS AVANZADAS CON JOINS (EJERCICIOS ADICIONALES)
 ### ==========================
 
-### EJERCICIO 1: Canciones populares por país
-# Obtener las canciones más reproducidas agrupadas por país de usuarios
+### EJERCICIO 1: songs populares por país
+# Obtener las songs más reproducidas agrupadas por país de users
 # Incluye: nombre_cancion, nombre_artista, nombre_album, nombre_pais, total_reproducciones, apariciones_en_playlists
-GET {{baseUrl}}/vistas/canciones-populares-por-pais
+GET {{baseUrl}}/vistas/songs-populares-por-pais
 
 ### EJERCICIO 1: Con filtros opcionales (por país específico)
-GET {{baseUrl}}/vistas/canciones-populares-por-pais?pais=Argentina
+GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=Argentina
 
 ### EJERCICIO 1: Con límite de resultados
-GET {{baseUrl}}/vistas/canciones-populares-por-pais?limit=10
+GET {{baseUrl}}/vistas/songs-populares-por-pais?limit=10
 
-### EJERCICIO 2: Ingresos por artista y discográfica
-# Analizar ingresos generados por cada combinación artista-discográfica
-# Incluye: nombre_artista, nombre_discografica, nombre_pais_discografica, total_ingresos, cantidad_suscripciones_activas, total_canciones, promedio_reproducciones
-GET {{baseUrl}}/vistas/ingresos-por-artista-discografica
+### EJERCICIO 2: Ingresos por artists y discográfica
+# Analizar ingresos generados por cada combinación artists-discográfica
+# Incluye: nombre_artista, nombre_discografica, nombre_pais_discografica, total_ingresos, cantidad_suscripciones_activas, total_songs, promedio_reproducciones
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica
 
 ### EJERCICIO 2: Con filtro por país de discográfica
-GET {{baseUrl}}/vistas/ingresos-por-artista-discografica?pais=Argentina
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?pais=Argentina
 
 ### EJERCICIO 2: Con filtro por monto mínimo de ingresos
-GET {{baseUrl}}/vistas/ingresos-por-artista-discografica?minimo_ingresos=50
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?minimo_ingresos=50
 
 ### EJERCICIO 2: Con ordenamiento por cantidad de suscripciones
-GET {{baseUrl}}/vistas/ingresos-por-artista-discografica?orden=suscripciones
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?orden=suscripciones
 
 ### ==========================
 ### PRUEBAS ADICIONALES PARA VISTAS
 ### ==========================
 
 ### Verificar que las vistas manejen casos sin datos
-GET {{baseUrl}}/vistas/canciones-populares-por-pais?pais=PaisInexistente
+GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=PaisInexistente
 
 ### Verificar rendimiento con parámetros de paginación
-GET {{baseUrl}}/vistas/ingresos-por-artista-discografica?page=1&limit=5
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?page=1&limit=5
 
 ### Probar combinación de filtros
-GET {{baseUrl}}/vistas/canciones-populares-por-pais?pais=Argentina&limit=3&orden=reproducciones
+GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=Argentina&limit=3&orden=reproducciones
