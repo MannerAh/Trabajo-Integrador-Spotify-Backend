@@ -1,6 +1,6 @@
 // models/playlist_song.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const {sequelize} = require('../config/database');
 
 const PlaylistSong = sequelize.define('PlaylistSong', {
     song_id: {

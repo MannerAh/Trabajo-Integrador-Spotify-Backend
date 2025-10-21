@@ -1,6 +1,6 @@
 // models/album.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
 const Album = sequelize.define('Album', {
     id: {

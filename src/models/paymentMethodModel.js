@@ -1,6 +1,6 @@
 // models/payment_method.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const {sequelize} = require('../config/database');
 
 const PaymentMethod = sequelize.define('PaymentMethod', {
     id: {

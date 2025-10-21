@@ -1,6 +1,6 @@
-// models/country.js
+// models/userModel.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { sequelize } = require('../config/database');
 
 const User = sequelize.define('User', {
     id: {

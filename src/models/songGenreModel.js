@@ -1,6 +1,6 @@
 // models/song_genre.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const {sequelize} = require('../config/database');
 
 const SongGenre = sequelize.define('SongGenre', {
     song_id: {

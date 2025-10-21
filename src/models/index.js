@@ -1,20 +1,20 @@
 // models/index.js
 
-const sequelize = require('../config/database');
-const User = require('./user');
-const Country = require('./country');
-const Artist = require('./artist');
-const Album = require('./album');
-const Song = require('./song');
-const RecordLabel = require('./record_label');
-const Playlist = require('./playlist');
-const PlaylistSong = require('./playlist_song'); // Tabla N:M
-const Genre = require('./genre');
-const SongGenre = require('./song_genre'); // Tabla N:M
-const ListeningHistory = require('./listening_history');
-const PaymentMethod = require('./payment_method');
-const Subscription = require('./subscription');
-const Billing = require('./billing');
+const {sequelize} = require('../config/database');
+const User = require('./userModel');
+const Country = require('./countryModel');
+const Artist = require('./artistModel');
+const Album = require('./albumModel');
+const Song = require('./songModel');
+const RecordLabel = require('./recordLabelModel');
+const Playlist = require('./playlistModel');
+const PlaylistSong = require('./playlistSongModel'); // Tabla N:M
+const Genre = require('./genreModel');
+const SongGenre = require('./songGenreModel'); // Tabla N:M
+const ListeningHistory = require('./listeningHistoryModel');
+const PaymentMethod = require('./paymentMethodModel');
+const Subscription = require('./subscriptionModel');
+const Billing = require('./billingModel');
 
 // ------------------------------------------------------------------
 // A) RELACIONES DE GEOGRAFÍA Y MÚSICA (1:N)
