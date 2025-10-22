@@ -1,13 +1,15 @@
-const { Song, Album, Artist, Genre } = require('../models');
-const { Op } = require('sequelize');
-
 // controllers/userController.js
 
+const { Song, Album, Artist, Genre } = require('../models');
+const { Op } = require('sequelize');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 
 // Número de "rondas de sal" para el hasheo de bcrypt
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const saltRounds = 10; 
+const PASSWORD_EXPIRY_DAYS = 90;
 
 // =========================================================================
 // POST /api/v2/users/register (Registro de Usuario)
@@ -57,32 +59,33 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+        // ... (validaciones y búsqueda de usuario) ...
 
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Email and password are required.' });
-        }
-
-        // 1. Buscar el usuario por email
         const user = await User.findOne({ where: { email } });
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
-        // 2. Comparar la contraseña hasheada
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
-        // 3. ¡Autenticación Exitosa!
-        // Falta JWT
-
-        const userResponse = { 
-            id: user.id, 
-            email: user.email
+        // Carga el 'payload' (datos del usuario que quiero guardar en el token)
+        const payload = {
+            id: user.id,
+            email: user.email,
+            role: user.role // Esencial para el control de acceso
         };
 
-        res.status(200).json({ message: 'Login successful.', user: userResponse });
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' }); 
+
+        // Devuelve el token en la respuesta
+        res.status(200).json({ 
+            message: 'Login successful.', 
+            user: { id: user.id, email: user.email, username: user.username, role: user.role },
+            token: token
+        });
 
     } catch (error) {
         res.status(500).json({ message: 'Error during user login.', error: error.message });
@@ -105,7 +108,7 @@ const getAllUsers = async (req, res) => {
 };
 
 // =========================================================================
-// GET /api/v1/users/:id (Obtener por ID)
+// GET /api/v2/users/:id (Obtener por ID)
 // =========================================================================
 const getUserById = async (req, res) => {
     try {

@@ -5,26 +5,22 @@ const router = express.Router();
 const { 
     registerUser,
     loginUser,
-    getAllUsers,
-    getUsersWithExpiredPassword,
-    getUserById
+    getAllUsers,    
+    getUserById,    
+    getUsersWithExpiredPassword 
 } = require('../controllers/userController');
 
-// Rutas de Autenticación y Usuario
+// middleware de autenticación
+const authenticateToken = require('../middlewares/auth');
 
-// POST /api/v2/users/register
+// Rutas de Autenticación (Públicas)
 router.post('/register', registerUser);
-
-// POST /api/v2/users/login
 router.post('/login', loginUser);
 
-// GET /api/v2/users
-router.get('/', getAllUsers);
-
-// GET /api/v2/users/:id
-router.get('/:id', getUserById);
-
-// GET /api/v2/users/expired-password
-router.get('/expired-password', getUsersWithExpiredPassword);
+// Rutas de CRUD/Administración (PROTEGIDAS)
+// Uso authenticateToken antes de la función del controlador
+router.get('/', authenticateToken, getAllUsers); 
+router.get('/expired-password', authenticateToken, getUsersWithExpiredPassword); 
+router.get('/:id', authenticateToken, getUserById); 
 
 module.exports = router;
