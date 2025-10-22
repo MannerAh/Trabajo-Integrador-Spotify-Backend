@@ -16,11 +16,11 @@ POST {{baseUrl}}/users/register
 Content-Type: {{json}}
 
 {
-  "email": "ana.garcia@example.com",
-  "password": "Secr3t0!",
-  "birth_date": "1995-05-20",
-  "gender": "mulher",
-  "zipcode": "4600",
+  "email": "leandrito420@example.com",
+  "password": "marrawder!",
+  "birth_date": "2003-04-20",
+  "gender": "male",
+  "zipcode": "2800",
   "country_id": 10
 }
 
@@ -37,7 +37,7 @@ Content-Type: {{json}}
 GET {{baseUrl}}/users?page=1&limit=20
 
 ### Obtener usuario por ID
-GET {{baseUrl}}/users/1
+GET {{baseUrl}}/users/2
 
 ### Actualizar usuario (cambio de password → actualiza fecha_ult_mod_password)
 PUT {{baseUrl}}/users/1
@@ -48,7 +48,7 @@ Content-Type: {{json}}
 }
 
 ### Listar users con password vencida (>90 días)
-GET {{baseUrl}}/users/password-vencidas
+GET {{baseUrl}}/users/expired-password
 
 
 ### ==========================

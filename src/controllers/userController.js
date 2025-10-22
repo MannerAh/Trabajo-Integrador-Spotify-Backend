@@ -89,9 +89,73 @@ const loginUser = async (req, res) => {
     }
 };
 
+// =========================================================================
+// GET /api/v2/users/ (Listar todos los usuarios)
+// =========================================================================
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            // Excluir la columna 'password' y 'pass_updated_at' por seguridad
+            attributes: { exclude: ['password', 'pass_updated_at'] } 
+        });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: 'Error while fetching users.', error: error.message });
+    }
+};
+
+// =========================================================================
+// GET /api/v1/users/:id (Obtener por ID)
+// =========================================================================
+const getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const user = await User.findByPk(id, {
+            attributes: { exclude: ['password'] }
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error while fetching user.', error: error.message });
+    }
+};
+
+// =========================================================================
+// GET /api/v2/users/expired-password (Listar por contraseña vencida)
+// =========================================================================
+const getUsersWithExpiredPassword = async (req, res) => {
+    try {
+        // Cálculo de la fecha límite (Hoy - 90 días)
+        const ninetyDaysAgo = new Date();
+        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - PASSWORD_EXPIRY_DAYS); 
+
+        const users = await User.findAll({
+            where: {
+                pass_updated_at: { 
+                    [Op.lt]: ninetyDaysAgo // Menor que 90 días
+                }
+            },
+            attributes: ['id', 'email', 'username', 'pass_updated_at', 'role'] 
+        });
+
+        res.status(200).json({ 
+            message: `Found ${users.length} users with passwords older than ${PASSWORD_EXPIRY_DAYS} days.`, 
+            users 
+        });
+        
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching users with expired passwords.', error: error.message });
+    }
+};
 
 module.exports = {
     registerUser,
     loginUser,
-    // Aquí agregaríamos funciones de perfil, update, etc.
+    getAllUsers,
+    getUsersWithExpiredPassword,
+    getUserById,
 };
