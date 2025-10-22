@@ -1,7 +1,18 @@
-/**
- * Rutas para usuarios
- * Los estudiantes deben implementar todas las rutas relacionadas con usuarios
- */
+// routes/userRoutes.js
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { 
+    registerUser,
+    loginUser
+} = require('../controllers/userController');
+
+// Rutas de Autenticación y Usuario
+
+// POST /api/v2/users/register
+router.post('/register', registerUser);
+
+// POST /api/v2/users/login
+router.post('/login', loginUser);
+
+module.exports = router;

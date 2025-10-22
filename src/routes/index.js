@@ -1,28 +1,21 @@
-/**
- * Archivo principal de rutas
- * Los estudiantes deben importar y configurar todas las rutas aquí
- */
+// routes/index.js
 
 const express = require("express");
 const router = express.Router();
 
-// TODO: Importar todas las rutas
+// ===== USUARIOS =====
 const userRoutes = require('./userRoutes');
+router.use('/users', userRoutes);
+// ===== ARTISTAS =====
 const artistRoutes = require('./artistRoutes');
-const albumesRoutes = require('./albumRoutes');
-// const cancionesRoutes = require('./canciones');
-// const generosRoutes = require('./generos');
-// const playlistsRoutes = require('./playlists');
-// const suscripcionesRoutes = require('./suscripciones');
-// const metodosPagoRoutes = require('./metodos-pago');
-// const pagosRoutes = require('./pagos');
-// const vistasRoutes = require('./vistas');
+router.use('/artists', artistRoutes);
 
-// TODO: Configurar las rutas con sus prefijos
-// router.use('/usuarios', usuariosRoutes);
-router.use('/artistas', artistRoutes);
-// router.use('/albumes', albumesRoutes);
-// router.use('/canciones', cancionesRoutes);
+// ===== ALBUMES =====
+//router.use('/albums', albumRoutes);
+
+// ===== CANCIONES =====
+const songRoutes = require('./songRoutes');
+router.use('/songs', songRoutes);
 
 // router.use('/generos', generosRoutes);
 

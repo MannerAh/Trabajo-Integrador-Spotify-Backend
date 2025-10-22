@@ -12,26 +12,25 @@ Content-Type: {{json}}
 ### USUARIOS
 ### ==========================
 # Crear usuario (OK)
-POST {{baseUrl}}/users
+POST {{baseUrl}}/users/register
 Content-Type: {{json}}
 
 {
   "email": "ana.garcia@example.com",
   "password": "Secr3t0!",
-  "fecha_nac": "1995-05-20",
-  "sexo": "F",
-  "cp": "4600",
-  "id_pais": 10,
-  "tipo_usuario_actual": 1
+  "birth_date": "1995-05-20",
+  "gender": "mulher",
+  "zipcode": "4600",
+  "country_id": 10
 }
 
 ### Crear usuario (ERROR: falta email)
-POST {{baseUrl}}/users
+POST {{baseUrl}}/users/register
 Content-Type: {{json}}
 
 {
   "password": "Secr3t0!",
-  "fecha_nac": "1995-05-20"
+  "birth_date": "1995-05-20"
 }
 
 ### Listar users

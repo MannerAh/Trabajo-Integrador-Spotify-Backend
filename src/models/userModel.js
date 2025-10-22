@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
         unique: true,
     },
     password: {
-        type: DataTypes.STRING(32),
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     create_time: {
@@ -37,6 +37,13 @@ const User = sequelize.define('User', {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
     },
+    role: { 
+        type: DataTypes.ENUM('FREE', 'PREMIUM', 'ADMIN'),
+        allowNull: false,
+        defaultValue: 'FREE', // r0l por defecto para nuevos registros
+        comment: 'Rol del usuario: FREE, PREMIUM, ADMIN'
+    },
+    // country_id se maneja en el index
 }, {
     tableName: 'user',
     timestamps: false,
