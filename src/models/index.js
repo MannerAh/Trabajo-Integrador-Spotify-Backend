@@ -92,13 +92,13 @@ Playlist.belongsToMany(Song, {
     through: PlaylistSong,
     foreignKey: 'playlist_id', // FK en la tabla intermedia que apunta a Playlist
     otherKey: 'song_id',      // FK en la tabla intermedia que apunta a Song
-    as: 'Tracks'
+    as: 'Songs'
 });
 Song.belongsToMany(Playlist, {
     through: PlaylistSong,
     foreignKey: 'song_id',
     otherKey: 'playlist_id',
-    as: 'InPlaylists'
+    as: 'Playlists'
 });
 
 // 15. Song <-> Genre a través de SongGenre
