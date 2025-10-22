@@ -18,7 +18,9 @@ router.use('/albums', albumRoutes);
 const songRoutes = require('./songRoutes');
 router.use('/songs', songRoutes);
 
-// router.use('/generos', generosRoutes);
+// ===== GÉNEROS =====
+const genreRoutes = require('./genreRoutes');
+router.use('/genres', genreRoutes);
 
 // router.use('/playlists', playlistsRoutes);
 // router.use('/suscripciones', suscripcionesRoutes);

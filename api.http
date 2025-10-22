@@ -177,15 +177,15 @@ DELETE {{baseUrl}}/songs/21/genres/3
 ### GÉNEROS
 ### ==========================
 # Crear género
-POST {{baseUrl}}/generos
+POST {{baseUrl}}/genres
 Content-Type: {{json}}
 
 {
-  "nombre": "Pop"
+  "name": "Pop"
 }
 
 ### Listar géneros
-GET {{baseUrl}}/generos
+GET {{baseUrl}}/genres
 
 
 ### ==========================
