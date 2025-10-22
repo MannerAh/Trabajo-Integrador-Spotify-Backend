@@ -224,26 +224,26 @@ Content-Type: {{json}}
 ### ==========================
 ### SUSCRIPCIONES
 ### ==========================
-# Crear suscripción (fecha_renovacion > fecha_inicio)
-POST {{baseUrl}}/suscripciones
+# Crear suscripción (renewal_date > start_date)
+POST {{baseUrl}}/subscriptions
 Content-Type: {{json}}
 
 {
   "user_id": 1,
-  "id_tipo_usuario": 1,
-  "fecha_inicio": "2025-10-01T00:00:00Z",
-  "fecha_renovacion": "2025-11-01T00:00:00Z"
+  "type": "PREMIUM",
+  "start_date": "2025-10-01T00:00:00Z",
+  "renewal_date": "2025-11-01T00:00:00Z"
 }
 
 ### ERROR: fechas inválidas
-POST {{baseUrl}}/suscripciones
+POST {{baseUrl}}/subscriptions
 Content-Type: {{json}}
 
 {
   "user_id": 1,
-  "id_tipo_usuario": 1,
-  "fecha_inicio": "2025-10-01T00:00:00Z",
-  "fecha_renovacion": "2025-09-01T00:00:00Z"
+  "type": "FREE",
+  "start_date": "2025-10-01T00:00:00Z",
+  "renewal_date": "2025-09-01T00:00:00Z"
 }
 
 
@@ -303,7 +303,7 @@ GET {{baseUrl}}/vistas/songs-populares-por-pais?limit=10
 
 ### EJERCICIO 2: Ingresos por artists y discográfica
 # Analizar ingresos generados por cada combinación artists-discográfica
-# Incluye: nombre_artista, nombre_discografica, nombre_pais_discografica, total_ingresos, cantidad_suscripciones_activas, total_songs, promedio_reproducciones
+# Incluye: nombre_artista, nombre_discografica, nombre_pais_discografica, total_ingresos, cantidad_subscriptions_activas, total_songs, promedio_reproducciones
 GET {{baseUrl}}/vistas/ingresos-por-artists-discografica
 
 ### EJERCICIO 2: Con filtro por país de discográfica
@@ -312,8 +312,8 @@ GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?pais=Argentina
 ### EJERCICIO 2: Con filtro por monto mínimo de ingresos
 GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?minimo_ingresos=50
 
-### EJERCICIO 2: Con order_in_playlistamiento por cantidad de suscripciones
-GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?order_in_playlist=suscripciones
+### EJERCICIO 2: Con order_in_playlistamiento por cantidad de subscriptions
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?order_in_playlist=subscriptions
 
 ### ==========================
 ### PRUEBAS ADICIONALES PARA VISTAS
