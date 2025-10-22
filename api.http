@@ -80,25 +80,59 @@ Content-Type: {{json}}
 GET {{baseUrl}}/artists
 
 
-### ==========================
+### =======================================================
 ### ÁLBUMES
-### ==========================
-# Crear álbum (UNIQUE por artists+title)
+### =======================================================
+
+### POST /albums (Crear Álbum)
 POST {{baseUrl}}/albums
 Content-Type: {{json}}
 
 {
-  "title": "El Amor Después Del Amor",
-  "id_artista": 1,
-  "id_discografica": 4,
-  "anio_publicacion": 1992
+  "title": "The Wall",
+  "year": 1979,
+  "image": "https://example.com/cover_prog.jpg",
+  "id_artist": 1
 }
 
-### Listar álbumes por artists
+### POST /albums (Prueba de error: Título duplicado)
+// Esto debería devolver un 400 si el artista ya tiene ese título.
+POST {{baseUrl}}/albums
+Content-Type: {{json}}
+
+{
+  "title": "The Wall",
+  "year": 1979,
+  "id_artist": 1
+}
+
+### GET /albums (Listar todos los Álbumes)
+GET {{baseUrl}}/albums
+
+### GET /albums?q=... (Filtro por Título)
+GET {{baseUrl}}/albums?q=wall
+
+### GET /albums?artistaId=X (Filtro por Artista)
 GET {{baseUrl}}/albums?artistaId=1
 
-### songs de un álbum
+### GET /albums/:id (Obtener Álbum por ID)
+// Incluye detalles del Artista y todas las Canciones del álbum.
+GET {{baseUrl}}/albums/1
+
+### GET /albums/:id/songs (Obtener SOLO Canciones del Álbum)
 GET {{baseUrl}}/albums/1/songs
+
+### PUT /albumes/:id (Actualizar Álbum)
+PUT {{baseUrl}}/albums/55
+Content-Type: {{json}}
+
+{
+  "title": "The Wall - Deluxe Edition",
+  "year": 2024 
+}
+
+### 6. DELETE /albums/:id (Eliminar Álbum)
+DELETE {{baseUrl}}/albums/55
 
 
 ### ==========================

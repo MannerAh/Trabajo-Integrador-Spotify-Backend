@@ -11,7 +11,8 @@ const artistRoutes = require('./artistRoutes');
 router.use('/artists', artistRoutes);
 
 // ===== ALBUMES =====
-//router.use('/albums', albumRoutes);
+const albumRoutes = require('./albumRoutes');
+router.use('/albums', albumRoutes);
 
 // ===== CANCIONES =====
 const songRoutes = require('./songRoutes');
