@@ -196,8 +196,8 @@ POST {{baseUrl}}/playlists
 Content-Type: {{json}}
 
 {
-  "title": "Para correr",
-  "id_usuario": 1
+  "name": "Para correrme",
+  "user_id": 1
 }
 
 ### Agregar canción a playlist
@@ -205,28 +205,19 @@ POST {{baseUrl}}/playlists/1/songs
 Content-Type: {{json}}
 
 {
-  "id_cancion": 1,
-  "orden": 1
+  "song_id": 1,
+  "order_in_playlist": 1
 }
 
 ### Quitar canción de playlist
 DELETE {{baseUrl}}/playlists/1/songs/1
 
-### Eliminar (soft-delete) playlist → debe enviar fecha_eliminada
+### Eliminar (soft-delete) playlist (la fecha se actualiza automáticamente)
 PUT {{baseUrl}}/playlists/1
 Content-Type: {{json}}
 
 {
-  "estado": "eliminada",
-  "fecha_eliminada": "2025-10-02T10:00:00Z"
-}
-
-### ERROR: soft-delete sin fecha
-PUT {{baseUrl}}/playlists/1
-Content-Type: {{json}}
-
-{
-  "estado": "eliminada"
+  "is_deleted": false
 }
 
 
@@ -321,8 +312,8 @@ GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?pais=Argentina
 ### EJERCICIO 2: Con filtro por monto mínimo de ingresos
 GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?minimo_ingresos=50
 
-### EJERCICIO 2: Con ordenamiento por cantidad de suscripciones
-GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?orden=suscripciones
+### EJERCICIO 2: Con order_in_playlistamiento por cantidad de suscripciones
+GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?order_in_playlist=suscripciones
 
 ### ==========================
 ### PRUEBAS ADICIONALES PARA VISTAS
@@ -335,4 +326,4 @@ GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=PaisInexistente
 GET {{baseUrl}}/vistas/ingresos-por-artists-discografica?page=1&limit=5
 
 ### Probar combinación de filtros
-GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=Argentina&limit=3&orden=reproducciones
+GET {{baseUrl}}/vistas/songs-populares-por-pais?pais=Argentina&limit=3&order_in_playlist=reproducciones

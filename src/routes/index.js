@@ -22,7 +22,11 @@ router.use('/songs', songRoutes);
 const genreRoutes = require('./genreRoutes');
 router.use('/genres', genreRoutes);
 
-// router.use('/playlists', playlistsRoutes);
+// ===== PLAYLISTS =====
+const playlistsRoutes = require('./playlistRoutes');
+router.use('/playlists', playlistsRoutes);
+
+
 // router.use('/suscripciones', suscripcionesRoutes);
 
 // router.use('/metodos-pago', metodosPagoRoutes);
