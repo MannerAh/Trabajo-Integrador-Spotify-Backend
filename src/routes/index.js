@@ -26,8 +26,11 @@ router.use('/genres', genreRoutes);
 const playlistsRoutes = require('./playlistRoutes');
 router.use('/playlists', playlistsRoutes);
 
+// ===== MÉETODOS DE PAGO =====
+const paymentMethodRoutes = require('./paymentMethodRoutes');
+router.use('/payment-methods', paymentMethodRoutes);
 
-// router.use('/suscripciones', suscripcionesRoutes);
+// ===== Suscripciones =====
 
 // router.use('/metodos-pago', metodosPagoRoutes);
 // router.use('/pagos', pagosRoutes);

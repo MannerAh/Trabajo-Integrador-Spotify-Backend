@@ -229,7 +229,7 @@ POST {{baseUrl}}/suscripciones
 Content-Type: {{json}}
 
 {
-  "id_usuario": 1,
+  "user_id": 1,
   "id_tipo_usuario": 1,
   "fecha_inicio": "2025-10-01T00:00:00Z",
   "fecha_renovacion": "2025-11-01T00:00:00Z"
@@ -240,7 +240,7 @@ POST {{baseUrl}}/suscripciones
 Content-Type: {{json}}
 
 {
-  "id_usuario": 1,
+  "user_id": 1,
   "id_tipo_usuario": 1,
   "fecha_inicio": "2025-10-01T00:00:00Z",
   "fecha_renovacion": "2025-09-01T00:00:00Z"
@@ -250,21 +250,21 @@ Content-Type: {{json}}
 ### ==========================
 ### MÉTODOS DE PAGO
 ### ==========================
-# Crear método de pago (sin CVC; tarjeta enmascarada por el servidor)
-POST {{baseUrl}}/metodos-pago
+### /payment-methods (Crear Método de Pago)
+POST {{baseUrl}}/payment-methods
 Content-Type: {{json}}
 
 {
-  "id_usuario": 1,
-  "tipo_forma_pago": "Tarjeta de crédito",
-  "nro_tarjeta": "4519000000001234",
-  "mes_caduca": 12,
-  "anio_caduca": 2027,
-  "banco_codigo": "BANK01"
+  "user_id": 1,
+  "type": "VISA",
+  "last_four_digits": "4321", 
+  "expiration_date": "2028-12-01",
+  "is_primary": true,
+  "token": "token69420" 
 }
 
 ### Listar métodos de pago por usuario
-GET {{baseUrl}}/metodos-pago?usuarioId=1
+GET {{baseUrl}}/payment-methods?userId=1
 
 
 ### ==========================
@@ -275,7 +275,7 @@ POST {{baseUrl}}/pagos
 Content-Type: {{json}}
 
 {
-  "id_usuario": 1,
+  "user_id": 1,
   "id_suscripcion": 1,
   "id_metodo_pago": 1,
   "importe": 100,
