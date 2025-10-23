@@ -16,7 +16,7 @@ const PASSWORD_EXPIRY_DAYS = 90;
 // =========================================================================
 const registerUser = async (req, res) => {
     try {
-        const { email, password, country_id } = req.body;
+        const { email, password, country_id, zipcode, gender, birth_date } = req.body;
 
         // 1. Validaciones
         if (!email || !password) {
@@ -36,7 +36,10 @@ const registerUser = async (req, res) => {
         const newUser = await User.create({
             email,
             password: hashedPassword, // Almaceno la contraseña hasheada
-            country_id // FK de cpomtry
+            country_id, // FK de cpomtry
+            zipcode,
+            gender,
+            birth_date
         });
         
         // No devuelvo la contraseña
@@ -142,7 +145,7 @@ const getUsersWithExpiredPassword = async (req, res) => {
                     [Op.lt]: ninetyDaysAgo // Menor que 90 días
                 }
             },
-            attributes: ['id', 'email', 'username', 'pass_updated_at', 'role'] 
+            attributes: ['id', 'email', 'pass_updated_at', 'role'] 
         });
 
         res.status(200).json({ 

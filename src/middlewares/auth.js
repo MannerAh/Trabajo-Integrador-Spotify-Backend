@@ -1,15 +1,15 @@
 // src/middlewares/auth.js
 
 const jwt = require('jsonwebtoken');
+const config = require('../config/jwtConfig');
 
-// Mi clave secreta (debe coincidir con la de userController.js)
-const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+
 
 // Middleware para verificar el JWT
 const authenticateToken = (req, res, next) => {
     // 1. Obtener el token del header 'Authorization'
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Obtiene solo el <token>
+    const token = authHeader && authHeader.split(' ')[1];
 
       // DEBUG: loguear header/token para depuración
     console.log('[auth] Authorization header:', authHeader);
@@ -17,18 +17,17 @@ const authenticateToken = (req, res, next) => {
     
     // 2. Si no hay token, acceso denegado
     if (token == null) {
-        return res.status(401).json({ message: 'Access denied. No token provided.' });
+        return res.status(403).json({ message: 'Access denied. No token provided.' });
     }
 
     // 3. Verificar el token
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, config.secret, (err, user) => {
         if (err) {
-            return res.status(403).json({ message: 'Invalid or expired token.' });
+            return res.status(401).json({ message: 'Invalid or expired token.' });
         }
         
         req.user = user; 
         
-        // Continuar con la ejecución de la ruta
         next();
     });
 };

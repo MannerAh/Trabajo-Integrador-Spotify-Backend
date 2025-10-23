@@ -22,6 +22,7 @@ Content-Type: {{json}}
   "gender": "male",
   "zipcode": "2800",
   "country_id": 10
+  //,"pass_updated_at": "2025-7-21"
 }
 
 ### Crear usuario (ERROR: falta email)
@@ -34,7 +35,8 @@ Content-Type: {{json}}
 }
 
 
-### login
+### Login
+# @name login
 POST {{baseUrl}}/users/login 
 Content-Type: application/json
 
@@ -42,8 +44,9 @@ Content-Type: application/json
   "email": "leandrito420@example.com",
   "password": "marrawder!"
 }
+
 ### Captura del Token
-@token = {{login.response.body.token}}
+@token = {{login.response.body.$.token}}
 
 ### Listar users
 GET {{baseUrl}}/users?page=1&limit=20
@@ -51,10 +54,12 @@ Authorization: Bearer {{token}}
 
 ### Obtener usuario por ID
 GET {{baseUrl}}/users/2
+Authorization: Bearer {{token}}
 
 ### Actualizar usuario (cambio de password → actualiza fecha_ult_mod_password)
 PUT {{baseUrl}}/users/1
 Content-Type: {{json}}
+Authorization: Bearer {{token}}
 
 {
   "password": "Nuev4Clave!"
@@ -62,6 +67,8 @@ Content-Type: {{json}}
 
 ### Listar users con password vencida (>90 días)
 GET {{baseUrl}}/users/expired-password
+Content-Type: {{json}}
+Authorization: Bearer {{token}}
 
 
 ### ==========================
@@ -271,19 +278,18 @@ GET {{baseUrl}}/payment-methods?userId=1
 ### PAGOS
 ### ==========================
 # Registrar pago (referenciando suscripción y método de pago válidos)
-POST {{baseUrl}}/pagos
+POST {{baseUrl}}/payments
 Content-Type: {{json}}
 
 {
   "user_id": 1,
-  "id_suscripcion": 1,
-  "id_metodo_pago": 1,
-  "importe": 100,
-  "fecha_pago": "2025-10-01T00:00:00Z"
+  "subscription_id": 1,
+  "payment_method_id": 1,
+  "amount": 100
 }
 
 ### Listar pagos por usuario y rango
-GET {{baseUrl}}/pagos?usuarioId=1&desde=2025-09-01&hasta=2025-12-31
+GET {{baseUrl}}/payments?user_id=1&desde=2025-09-01&hasta=2025-12-31
 
 
 ### ==========================
