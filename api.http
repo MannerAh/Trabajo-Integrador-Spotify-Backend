@@ -41,8 +41,8 @@ POST {{baseUrl}}/users/login
 Content-Type: application/json
 
 {
-  "email": "peterpunk@example.com",
-  "password": "b0ysdontCry"
+  "email": "leandrito420@example.com",
+  "password": "Nuev4Clave!"
 }
 
 ### Captura del Token
@@ -212,7 +212,7 @@ GET {{baseUrl}}/genres
 ### ==========================
 
 ### Listar playlists
-GET {{baseUrl}}/playlists/1
+GET {{baseUrl}}/playlists/
 
 
 ### Crear playlist (activa por defecto)
@@ -220,17 +220,17 @@ POST {{baseUrl}}/playlists
 Content-Type: {{json}}
 
 {
-  "name": "Para correrme",
-  "user_id": 1
+  "name": "Te abrazo??",
+  "user_id": 2
 }
 
 ### Agregar canción a playlist
-POST {{baseUrl}}/playlists/1/songs
+POST {{baseUrl}}/playlists/2/songs
 Content-Type: {{json}}
 
 {
-  "song_id": 1,
-  "order_in_playlist": 1
+  "song_id": 2,
+  "order_in_playlist": 4
 }
 
 ### Quitar canción de playlist
