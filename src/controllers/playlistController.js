@@ -1,6 +1,6 @@
 // controllers/playlistController.js
 
-const { Playlist, User, Song } = require('../models');
+const { Playlist, User, Song, PlaylistSong } = require('../models');
 const { Op } = require('sequelize');
 
 // =========================================================================
@@ -14,7 +14,7 @@ const getAllPlaylists = async (req, res) => {
                 is_deleted: false 
             },
             include: [
-                { model: User, as: 'User', attributes: ['id', 'email'] }
+                { model: User, as: 'Creator', attributes: ['id', 'email'] }
             ]
         });
 
@@ -34,7 +34,7 @@ const getPlaylistById = async (req, res) => {
 
         const playlist = await Playlist.findByPk(id, {
             include: [
-                { model: User, as: 'User', attributes: ['id', 'email'] },
+                { model: User, as: 'Creator', attributes: ['id', 'email'] },
                 { 
                     model: Song, 
                     as: 'Songs', 
@@ -42,7 +42,6 @@ const getPlaylistById = async (req, res) => {
                     through: { attributes: ['order_in_playlist'] } 
                 }
             ],
-            order: [[{ model: Song, as: 'Songs' }, 'PlaylistSong', 'order_in_playlist', 'ASC']]
         });
 
         if (!playlist || playlist.is_deleted) { // Verificar si existe y si está eliminada

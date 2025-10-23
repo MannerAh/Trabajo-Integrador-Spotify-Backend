@@ -10,10 +10,6 @@ const authenticateToken = (req, res, next) => {
     // 1. Obtener el token del header 'Authorization'
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-
-      // DEBUG: loguear header/token para depuración
-    console.log('[auth] Authorization header:', authHeader);
-    console.log('[auth] Extracted token:', token ? token.slice(0, 20) + '...' : token);
     
     // 2. Si no hay token, acceso denegado
     if (token == null) {

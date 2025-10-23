@@ -158,10 +158,76 @@ const getUsersWithExpiredPassword = async (req, res) => {
     }
 };
 
+// =========================================================================
+// PUT /api/v2/users/:id (Actualizar Usuario)
+// =========================================================================
+const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        if (req.user.id !== parseInt(id) && req.user.role !== 'ADMIN') {
+            return res.status(403).json({ message: 'Forbidden. You can only update your own profile.' });
+        }
+
+        const user = await User.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        if (updates.password) {
+            const hashedPassword = await bcrypt.hash(updates.password, saltRounds);
+            user.password = hashedPassword;
+            user.fecha_ult_mod_password = new Date();
+            delete updates.password; 
+        }
+
+        // Aplicar el resto de las actualizaciones 
+        await user.update(updates);
+
+        const responseUser = user.toJSON();
+        delete responseUser.password;
+
+        res.status(200).json(responseUser);
+        
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating user.', error: error.message });
+    }
+};
+
+// =========================================================================
+// DELETE /api/v2/users/:id (Eliminar Usuario)  
+// =========================================================================
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (req.user.id !== parseInt(id) && req.user.role !== 'ADMIN') {
+            return res.status(403).json({ message: 'Forbidden. You can only delete your own profile.' });
+        }
+
+        const user = await User.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+        user.is_deleted = true;
+        user.deleted_at = new Date();
+
+        await user.save();
+
+        res.status(200).json({ message: 'User deleted successfully (Logical delete).' });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting user.', error: error.message });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
     getAllUsers,
     getUsersWithExpiredPassword,
     getUserById,
+    updateUser,
+    deleteUser
 };

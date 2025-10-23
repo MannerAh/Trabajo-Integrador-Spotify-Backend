@@ -14,10 +14,10 @@ const createSong = async (req, res) => {
         }
 
         // 2. Validación de duración
-        if (typeof duration !== 'number' || duration <= 0) {
+        if (typeof duration !== 'number' || duration <= 20) {
             return res.status(400).json({ message: 'Song duration (in seconds) must be a valid number.' });
         }
-
+        
         // 3. Album existe
         const albumExists = await Album.findByPk(id_album);
         if (!albumExists) {
@@ -39,7 +39,7 @@ const createSong = async (req, res) => {
 
 const getAllSongs = async (req, res) => {
 try {
-        const { genre, albumId } = req.query;
+        const { genre, albumId, artistId } = req.query;
         let whereClause = {};
         let includeClause = [
             { model: Album, as: 'Album',
@@ -49,7 +49,7 @@ try {
              { model: Genre, as: 'Genres', attributes: ['id', 'name'] }
         ];
 
-        // Filtro por albumId (  si existe lo añado al WHER princiapl)
+        // Filtro por albumId ( si existe lo añado al WHERe princiapl)
         if (albumId) {
             whereClause.id_album = albumId
         }

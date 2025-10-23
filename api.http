@@ -16,13 +16,13 @@ POST {{baseUrl}}/users/register
 Content-Type: {{json}}
 
 {
-  "email": "leandrito420@example.com",
-  "password": "marrawder!",
-  "birth_date": "2003-04-20",
-  "gender": "male",
-  "zipcode": "2800",
-  "country_id": 10
-  //,"pass_updated_at": "2025-7-21"
+  "email": "peterpunk@example.com",
+  "password": "b0ysdontCry",
+  //cta"birth_date": "2003-04-20",
+  //cta"gender": "male",
+  //cta"zipcode": "777",
+  //cta"country_id": 10
+  //cta,"pass_updated_at": "2025-7-21"
 }
 
 ### Crear usuario (ERROR: falta email)
@@ -41,8 +41,8 @@ POST {{baseUrl}}/users/login
 Content-Type: application/json
 
 {
-  "email": "leandrito420@example.com",
-  "password": "marrawder!"
+  "email": "peterpunk@example.com",
+  "password": "b0ysdontCry"
 }
 
 ### Captura del Token
@@ -53,11 +53,12 @@ GET {{baseUrl}}/users?page=1&limit=20
 Authorization: Bearer {{token}}
 
 ### Obtener usuario por ID
-GET {{baseUrl}}/users/2
+GET {{baseUrl}}/users/4
 Authorization: Bearer {{token}}
 
 ### Actualizar usuario (cambio de password → actualiza fecha_ult_mod_password)
-PUT {{baseUrl}}/users/1
+// Si intentas cambiar la contraseña de otro usuario, te devuelve un 403 forbidden.
+PUT {{baseUrl}}/users/4
 Content-Type: {{json}}
 Authorization: Bearer {{token}}
 
@@ -68,6 +69,10 @@ Authorization: Bearer {{token}}
 ### Listar users con password vencida (>90 días)
 GET {{baseUrl}}/users/expired-password
 Content-Type: {{json}}
+Authorization: Bearer {{token}}
+
+### DELETE /api/v2/users/:id (Eliminar Usuario)
+DELETE {{baseUrl}}/users/4
 Authorization: Bearer {{token}}
 
 
@@ -85,6 +90,9 @@ Content-Type: {{json}}
 
 ### Listar artistas
 GET {{baseUrl}}/artists
+
+### Artista por ID
+GET {{baseUrl}}/artists/4
 
 
 ### =======================================================
@@ -143,7 +151,7 @@ DELETE {{baseUrl}}/albums/55
 
 
 ### ==========================
-### songs
+### CANCIONES
 ### ==========================
 # Crear canción (OK: duracion en segundos)
 POST {{baseUrl}}/songs
@@ -165,8 +173,12 @@ Content-Type: {{json}}
   "id_album": 1
 }
 
-### Listar songs (filtros)
-GET {{baseUrl}}/songs?genres=Jazz&albumId=24
+### Listar canciones (filtros)
+GET {{baseUrl}}/songs?genres=Jazz&albumId=1
+
+### Listar todas canciones
+GET {{baseUrl}}/songs
+
 
 ### Asociar género a canción
 POST {{baseUrl}}/songs/21/genres
@@ -198,7 +210,12 @@ GET {{baseUrl}}/genres
 ### ==========================
 ### PLAYLISTS
 ### ==========================
-# Crear playlist (activa por defecto)
+
+### Listar playlists
+GET {{baseUrl}}/playlists/1
+
+
+### Crear playlist (activa por defecto)
 POST {{baseUrl}}/playlists
 Content-Type: {{json}}
 
@@ -226,6 +243,7 @@ Content-Type: {{json}}
 {
   "is_deleted": false
 }
+
 
 
 ### ==========================

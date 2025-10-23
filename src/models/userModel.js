@@ -43,11 +43,30 @@ const User = sequelize.define('User', {
         defaultValue: 'FREE', // r0l por defecto para nuevos registros
         comment: 'Rol del usuario: FREE, PREMIUM, ADMIN'
     },
-    // country_id se maneja en el index
+    is_deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false, // Por defecto, el usuario no está eliminado
+        allowNull: true,
+    },
+    deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true, // Puede ser NULL si el usuario no ha sido eliminado
+    },
+
 }, {
     tableName: 'user',
-    timestamps: false,
+    timestamps: true,
     underscored: true,
+    // Esto asegura que Sequelize utilice "deleted_at" para el borrado lógico
+    paranoid: true, // Habilita el uso de deleted_at
+    deletedAt: 'deleted_at',
+    
+
+    defaultScope: {
+        where: {
+            is_deleted: false
+        }
+    },
 });
 
 module.exports = User;

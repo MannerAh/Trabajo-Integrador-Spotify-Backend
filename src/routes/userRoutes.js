@@ -7,7 +7,9 @@ const {
     loginUser,
     getAllUsers,    
     getUserById,    
-    getUsersWithExpiredPassword 
+    getUsersWithExpiredPassword ,
+    updateUser,
+    deleteUser,
 } = require('../controllers/userController');
 
 // middleware de autenticación
@@ -18,7 +20,11 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // Rutas de CRUD/Administración (PROTEGIDAS)
-// Uso authenticateToken antes de la función del controlador
+
+router.delete('/:id', authenticateToken, deleteUser);
+
+router.put('/:id', authenticateToken, updateUser);
+
 router.get('/', authenticateToken, getAllUsers); 
 router.get('/expired-password', authenticateToken, getUsersWithExpiredPassword); 
 router.get('/:id', authenticateToken, getUserById); 
