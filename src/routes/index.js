@@ -34,7 +34,10 @@ router.use('/payment-methods', paymentMethodRoutes);
 const subscriptionRoutes = require('./subscriptionRoutes');
 router.use('/subscriptions', subscriptionRoutes);
 
-// router.use('/pagos', pagosRoutes);
+// ===== PAGOS =====
+const billingRoutes = require('./billingRoutes');
+router.use('/payments', billingRoutes);
+
 // router.use('/vistas', vistasRoutes);
 router.use('/seed', require('./seederRoutes'));
 
